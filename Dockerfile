@@ -47,6 +47,7 @@ RUN for TOMCAT_NATIVE_VER in ${TOMCAT_NATIVE_ALL} ; do \
       export TOMCAT_NATIVE_URL="https://archive.apache.org/dist/tomcat/tomcat-connectors/native/${TOMCAT_NATIVE_VER}/source/tomcat-native-${TOMCAT_NATIVE_VER}-src.tar.gz" ; \
       mkdir -p "${TOMCAT_NATIVE_BUILD_HOME}" ; \
       build-script ; \
+      ( cd "${BUILD_HOME}" && ln -sv "${TOMCAT_NATIVE_VER}" "${TOMCAT_NATIVE_VER%.*}" ) ; \
     done
 
 FROM scratch
