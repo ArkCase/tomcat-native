@@ -38,9 +38,9 @@ RUN apt-get -y install \
 # installations to cherrypick whatever they want to use.
 #
 # For example: Pentaho uses Tomcat 9, but requires version 1.2.39,
-# while ArkCase is perfectly happy with 1.3.5 or 2.0.12 (when on
+# while ArkCase is perfectly happy with 1.3.* or 2.0.* (when on
 # Tomcat 11).
-ARG TOMCAT_NATIVE_ALL="1.2.39 1.3.7 2.0.14"
+ARG TOMCAT_NATIVE_ALL="1.2.39 1.3.8 2.0.15"
 
 COPY --chown=root:root --chmod=0755 build-script /usr/local/bin
 RUN for TOMCAT_NATIVE_VER in ${TOMCAT_NATIVE_ALL} ; do \
