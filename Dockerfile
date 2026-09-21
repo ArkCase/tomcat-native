@@ -25,8 +25,12 @@ ARG TOMCAT_NATIVE_KEYS_URL
 ARG BUILD_HOME
 
 RUN apt-get -y install \
+        build-essential \
         libapr1-dev \
         libssl-dev \
+        openjdk-17-jdk \
+        openjdk-21-jdk \
+        openjdk-25-jdk \
       && \
     apt-get clean
 
@@ -47,7 +51,7 @@ RUN for TOMCAT_NATIVE_VER in ${TOMCAT_NATIVE_ALL} ; do \
       export TOMCAT_NATIVE_BUILD_HOME="${BUILD_HOME}/${TOMCAT_NATIVE_VER}" ; \
       export TOMCAT_NATIVE_URL="https://archive.apache.org/dist/tomcat/tomcat-connectors/native/${TOMCAT_NATIVE_VER}/source/tomcat-native-${TOMCAT_NATIVE_VER}-src.tar.gz" ; \
       mkdir -p "${TOMCAT_NATIVE_BUILD_HOME}" ; \
-      build-script ; \
+      build-script && \
       ( cd "${BUILD_HOME}" && ln -sv "${TOMCAT_NATIVE_VER}" "${TOMCAT_NATIVE_VER%.*}" ) ; \
     done
 

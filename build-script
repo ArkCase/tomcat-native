@@ -23,7 +23,10 @@ SRC="${TOMCAT_NATIVE_BUILD_HOME}/source.tar.gz"
 verified-download --keys "${TOMCAT_NATIVE_KEYS_URL}" "${TOMCAT_NATIVE_URL}" "${SRC}"
 trap cleanup EXIT
 
-JAVA_VERSIONS=(11 17 21)
+JAVA_VERSIONS="$(list-java 2>&1)" || fail "Failed to list the Java versions (rc=${?}): ${JAVA_VERSIONS}"
+JAVA_VERSIONS=( ${JAVA_VERSIONS} )
+
+[ ${#JAVA_VERSIONS[@]} -gt 0 ] || fail "No Java versions to build against"
 
 running "Building for Java versions [${JAVA_VERSIONS[@]}]"
 BUILDS=()
