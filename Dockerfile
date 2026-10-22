@@ -11,6 +11,7 @@ ARG PUBLIC_REGISTRY="public.ecr.aws"
 ARG VER="1.0.0"
 
 ARG TOMCAT_NATIVE_KEYS_URL="https://downloads.apache.org/tomcat/tomcat-connectors/KEYS"
+ARG TOMCAT_NATIVE_KEYS_SIGNER="@apache[.]org$"
 ARG BUILD_HOME="/tomcat-native"
 
 ARG BASE_REGISTRY="${PUBLIC_REGISTRY}"
@@ -22,6 +23,7 @@ ARG BASE_IMG="${BASE_REGISTRY}/${BASE_REPO}${FIPS}:${BASE_VER_PFX}${BASE_VER}"
 FROM "${BASE_IMG}" AS builder
 
 ARG TOMCAT_NATIVE_KEYS_URL
+ARG TOMCAT_NATIVE_KEYS_SIGNER
 ARG BUILD_HOME
 
 RUN apt-get -y install \
