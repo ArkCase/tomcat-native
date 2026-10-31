@@ -39,16 +39,16 @@ for JAVA in "${JAVA_VERSIONS[@]}" ; do
 	mkdir -p "${TARGET}" "${BUILD}" || fail "Failed to build the target and build directories at [${TOMCAT_NATIVE_BUILD_HOME}]"
 	BUILDS+=("${BUILD}")
 	(
-		set -euo pipefail
-		cd "${BUILD}"
-		tar --strip-components=1 -xzvf "${SRC}"
-		cd native
-		./configure --prefix="${TARGET}"
-		make
-		make install
-		cd "${TARGET}"
-		mv -vf lib/* .
-		strip *.so *.so.* *.a
+		# Bash ignores "set -e" within the left side of an ||, even if set in here
+		cd "${BUILD}" &&
+		tar --strip-components=1 -xzvf "${SRC}" &&
+		cd native &&
+		./configure --prefix="${TARGET}" &&
+		make &&
+		make install &&
+		cd "${TARGET}" &&
+		mv -vf lib/* . &&
+		strip *.so *.so.* *.a &&
 		rmdir lib
 	) || fail "Build for Java ${JAVA} failed"
 	ok "Build for Java ${JAVA} succeeded!"
