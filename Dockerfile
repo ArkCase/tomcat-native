@@ -50,11 +50,11 @@ ARG TOMCAT_NATIVE_ALL="1.2.39 1.3.10 2.0.17"
 
 COPY --chown=root:root --chmod=0755 build-script /usr/local/bin
 RUN for TOMCAT_NATIVE_VER in ${TOMCAT_NATIVE_ALL} ; do \
-      export TOMCAT_NATIVE_BUILD_HOME="${BUILD_HOME}/${TOMCAT_NATIVE_VER}" ; \
-      export TOMCAT_NATIVE_URL="https://archive.apache.org/dist/tomcat/tomcat-connectors/native/${TOMCAT_NATIVE_VER}/source/tomcat-native-${TOMCAT_NATIVE_VER}-src.tar.gz" ; \
-      mkdir -p "${TOMCAT_NATIVE_BUILD_HOME}" ; \
+      export TOMCAT_NATIVE_BUILD_HOME="${BUILD_HOME}/${TOMCAT_NATIVE_VER}" && \
+      export TOMCAT_NATIVE_URL="https://archive.apache.org/dist/tomcat/tomcat-connectors/native/${TOMCAT_NATIVE_VER}/source/tomcat-native-${TOMCAT_NATIVE_VER}-src.tar.gz" && \
+      mkdir -p "${TOMCAT_NATIVE_BUILD_HOME}" && \
       build-script && \
-      ( cd "${BUILD_HOME}" && ln -sv "${TOMCAT_NATIVE_VER}" "${TOMCAT_NATIVE_VER%.*}" ) ; \
+      ( cd "${BUILD_HOME}" && ln -sv "${TOMCAT_NATIVE_VER}" "${TOMCAT_NATIVE_VER%.*}" ) || exit 1 ; \
     done
 
 FROM scratch
